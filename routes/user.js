@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const userModule = require('../models/user');
+const UserModule = require('../models/user');
 
 module.exports = {
   async signup(ctx) {
@@ -52,7 +52,7 @@ module.exports = {
       password,
     } = ctx.request.body;
     // 数据库获取user
-    const user = await userModule.findOne({ name });
+    const user = await UserModule.findOne({ name });
     // 判断user密码是否正确
     if (user && await bcrypt.compare(password, user.password)) {
       ctx.session.user = {
