@@ -17,6 +17,10 @@ const UserSchema = new Schema({
     type: 'string',
     required: true,
   },
+  isAmin: {
+    type: Boolean,
+    default: false,
+  },
   meta: {
     createAt: {
       type: Date,

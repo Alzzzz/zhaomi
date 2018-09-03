@@ -4,9 +4,21 @@ const views = require('koa-views');
 const router = require('./routes');
 const serve = require('koa-static');
 const mongoose = require('mongoose');
-const CONFIG = require('./config/config')
+const session = require('koa-session');
+const bodyParser = require('koa-bodyparser');
+
+const CONFIG = require('./config/config');
 
 const app = new Koa();
+
+app.keys = ['somethings'];
+
+app.use(bodyParser());
+
+app.use(session({
+  key: CONFIG.session.key,
+  maxAge: CONFIG.session.maxAge,
+}, app));
 
 app.use(views(path.join(__dirname, 'views'), {
   map: {

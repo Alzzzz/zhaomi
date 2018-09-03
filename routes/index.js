@@ -7,6 +7,7 @@ module.exports = (app) => {
   router.get('/', home.index);
   router.get('/about', about.index);
   router.get('/signup', user.signup);
+  router.post('/signup', user.signup);
 
   app.use(router.routes(), router.allowedMethods());
 };
