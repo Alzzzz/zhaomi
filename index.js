@@ -6,6 +6,7 @@ const serve = require('koa-static');
 const mongoose = require('mongoose');
 const session = require('koa-session');
 const bodyParser = require('koa-bodyparser');
+const Flash = require('./middlewares/flash');
 
 const CONFIG = require('./config/config');
 
@@ -35,6 +36,8 @@ app.use(async (ctx, next) => {
   ctx.state.ctx = ctx;
   await next();
 });
+
+app.use(new Flash());
 
 router(app);
 
