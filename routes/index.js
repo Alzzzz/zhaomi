@@ -14,9 +14,11 @@ module.exports = (app) => {
   router.get('/signout', user.signout);
 
   // 帖子
-  router.get('/posts/new', posts.create);
   // 发布帖子
+  router.get('/posts/new', posts.create);
   router.post('/posts/new', posts.create);
+  // 展示
+  router.get('/posts/:id', posts.show);
 
   app.use(router.routes(), router.allowedMethods());
 };

@@ -15,6 +15,18 @@ module.exports = {
 
     const res = await PostModule.create(post);
     ctx.flash = { success: '发布成功' };
-    ctx.redirect(`/post/${res._id}`);
+    ctx.redirect(`/posts/${res._id}`);
   },
+
+  async show(ctx){
+    const post = await PostModule.findById(ctx.params.id).populate({
+      path: 'author',
+      select: 'name',
+    })
+
+    await ctx.render('post', {
+      title: post.title,
+      post,
+    });
+  }
 }
