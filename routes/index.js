@@ -8,6 +8,8 @@ module.exports = (app) => {
   router.get('/about', about.index);
   router.get('/signup', user.signup);
   router.post('/signup', user.signup);
+  router.get('/signin', user.signin);
+  router.post('/signin', user.signin);
 
   app.use(router.routes(), router.allowedMethods());
 };
