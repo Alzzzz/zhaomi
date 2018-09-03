@@ -30,6 +30,12 @@ app.use(serve(
   path.join(__dirname, 'public'),
 ));
 
+app.use(async (ctx, next) => {
+  //设置全局状态机
+  ctx.state.ctx = ctx;
+  await next();
+});
+
 router(app);
 
 mongoose.connect(CONFIG.mongodb);

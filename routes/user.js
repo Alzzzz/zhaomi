@@ -39,8 +39,8 @@ module.exports = {
     ctx.body = result;
   },
 
-  async signin (ctx, next) {
-    if(ctx.method === 'GET'){
+  async signin(ctx) {
+    if (ctx.method === 'GET') {
       await ctx.render('signin', {
         title: '用户登录',
       });
@@ -51,10 +51,10 @@ module.exports = {
       name,
       password,
     } = ctx.request.body;
-    //数据库获取user
-    const user = await userModule.findOne({name});
-    //判断user密码是否正确
-    if(user && await bcrypt.compare(password, user.password)){
+    // 数据库获取user
+    const user = await userModule.findOne({ name });
+    // 判断user密码是否正确
+    if (user && await bcrypt.compare(password, user.password)) {
       ctx.session.user = {
         _id: user._id,
         name: user.name,
@@ -66,5 +66,10 @@ module.exports = {
     } else {
       ctx.body = '用户名或密码错误';
     }
+  },
+
+  signout(ctx) {
+    ctx.session.user = null;
+    ctx.redirect('/');
   },
 };

@@ -10,6 +10,7 @@ module.exports = (app) => {
   router.post('/signup', user.signup);
   router.get('/signin', user.signin);
   router.post('/signin', user.signin);
+  router.get('/signout', user.signout);
 
   app.use(router.routes(), router.allowedMethods());
 };
