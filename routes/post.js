@@ -1,11 +1,14 @@
 const PostModule = require('../models/post');
 const CommentModule = require('../models/comment');
+const CategoryModule = require('../models/category');
 
 module.exports = {
   async create(ctx) {
     if (ctx.method === 'GET') {
+      const categories = await CategoryModule.find({});
       await ctx.render('create', {
         title: '新建文章',
+        categories,
       });
       return;
     }
@@ -20,10 +23,13 @@ module.exports = {
   },
 
   async show(ctx) {
-    const post = await PostModule.findById(ctx.params.id).populate({
+    const post = await PostModule.findById(ctx.params.id).populate([{
       path: 'author',
       select: 'name',
-    });
+    },{
+      path: 'category',
+      select: ['title', 'name'],
+    }]);
 
     const comments = await CommentModule.find({ postId: ctx.params.id }).populate({
       path: 'from',
@@ -40,6 +46,7 @@ module.exports = {
   async edit(ctx) {
     if (ctx.method === 'GET') {
       const post = await PostModule.findById(ctx.params.id);
+      const categories = await CategoryModule.find({});
       if (!post) {
         throw new Error('文章不存在');
       }
@@ -52,18 +59,22 @@ module.exports = {
       await ctx.render('edit', {
         title: '更新文章',
         post,
+        categories,
       });
       return;
     }
 
+    console.log(ctx.request.body)
     const {
       title,
       content,
+      category,
     } = ctx.request.body;
 
     await PostModule.findByIdAndUpdate(ctx.params.id, {
       title,
       content,
+      category,
     });
 
     ctx.flash = {

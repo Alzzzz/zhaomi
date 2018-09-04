@@ -4,8 +4,16 @@
     <header class="editor-header">
         <input name="title" value={{post.title}} class="input is-shadowless is-radiusless" type="text" placeholder="输入文章标题...">
         <div class="right-box">
-            <button type="submit" class="button is-small is-primary">更新</button>
-        </div>
+          <div class="select is-small">
+              <select name="category">
+                  <option disabled="disabled">分类</option>
+                  {% for category in categories %}
+                  <option value={{category._id}}>{{category.title}}</option>
+                  {% endfor %}
+              </select>
+          </div>
+          <button type="submit" class="button is-small is-primary">更新</button>
+      </div>
     </header>
     <div id="editor">
         <textarea  autofocus="autofocus" name="content" class="input" name="content">{{post.content}}</textarea>
@@ -15,7 +23,7 @@
 <nav class="navbar has-shadow">
     <div class="navbar-brand">
         <a class="navbar-item" href="/">
-            JS之禅
+          着迷
         </a>
     </div>
 </nav>

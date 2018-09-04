@@ -32,6 +32,7 @@ async function isAdmin(ctx, next) {
 
 module.exports = (app) => {
   router.get('/', postList.index);
+  router.get('/posts', postList.index);
   router.get('/about', about.index);
   router.get('/signup', user.signup);
   router.post('/signup', user.signup);
@@ -57,6 +58,9 @@ module.exports = (app) => {
 
   // 分类
   router.get('/category', isAdmin, categories.list);
+  router.get('/category/new', isAdmin, categories.create);
+  router.post('/category/new', isAdmin, categories.create);
+  router.get('/category/:id/delete', isAdmin, categories.destroy);
 
   app.use(router.routes(), router.allowedMethods());
 };
