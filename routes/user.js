@@ -33,7 +33,7 @@ module.exports = {
     console.log(`user = ${user}`);
 
     console.log(`开始数据库操作，date = ${new Date()}`);
-    const result = await userModule.create(user);
+    const result = await UserModule.create(user);
 
     console.log(`数据库操作结束, result=${result}, date = ${new Date()}`);
     ctx.body = result;
