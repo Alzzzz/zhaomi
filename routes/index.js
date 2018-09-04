@@ -3,6 +3,7 @@ const about = require('./about');
 const user = require('./user');
 const posts = require('./post');
 const postList = require('./postlist');
+const comments = require('./comments');
 
 async function isLoginUser(ctx, next) {
   if (!ctx.session.user) {
@@ -46,8 +47,13 @@ module.exports = (app) => {
   // 编辑
   router.get('/posts/:id/edit', isLoginUser, posts.edit);
   router.post('/posts/:id/edit', isLoginUser, posts.edit);
-  // // 删除
+  // 删除
   router.get('/posts/:id/delete', isLoginUser, posts.destroy);
+
+  // 评论
+  router.post('/comments/new', isLoginUser, comments.create);
+  router.get('/comments/:id/delete', isLoginUser, comments.destroy);
+
 
   app.use(router.routes(), router.allowedMethods());
 };

@@ -1,4 +1,5 @@
 const PostModule = require('../models/post');
+const CommentModule = require('../models/comment');
 
 module.exports = {
   async create(ctx) {
@@ -24,9 +25,15 @@ module.exports = {
       select: 'name',
     });
 
+    const comments = await CommentModule.find({ postId: ctx.params.id }).populate({
+      path: 'from',
+      select: 'name',
+    });
+
     await ctx.render('post', {
       title: post.title,
       post,
+      comments,
     });
   },
 
