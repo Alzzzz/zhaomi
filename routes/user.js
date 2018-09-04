@@ -36,7 +36,7 @@ module.exports = {
     const result = await UserModule.create(user);
 
     console.log(`数据库操作结束, result=${result}, date = ${new Date()}`);
-    ctx.body = result;
+    ctx.redirect('/signin');
   },
 
   async signin(ctx) {
@@ -53,6 +53,7 @@ module.exports = {
     } = ctx.request.body;
     // 数据库获取user
     const user = await UserModule.findOne({ name });
+    console.log(`数据库中的user=${user}`);
     // 判断user密码是否正确
     if (user && await bcrypt.compare(password, user.password)) {
       ctx.session.user = {
@@ -62,6 +63,7 @@ module.exports = {
         email: user.email,
       };
 
+      console.log(ctx.session.user);
       ctx.redirect('/');
     } else {
       ctx.body = '用户名或密码错误';

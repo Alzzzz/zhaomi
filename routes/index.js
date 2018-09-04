@@ -4,6 +4,7 @@ const user = require('./user');
 const posts = require('./post');
 const postList = require('./postlist');
 const comments = require('./comments');
+const categories = require('./category');
 
 async function isLoginUser(ctx, next) {
   if (!ctx.session.user) {
@@ -54,6 +55,8 @@ module.exports = (app) => {
   router.post('/comments/new', isLoginUser, comments.create);
   router.get('/comments/:id/delete', isLoginUser, comments.destroy);
 
+  // 分类
+  router.get('/category', isAdmin, categories.list);
 
   app.use(router.routes(), router.allowedMethods());
 };
