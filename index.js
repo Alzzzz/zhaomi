@@ -28,12 +28,10 @@ app.use(views(path.join(__dirname, 'views'), {
   },
 }));
 
-app.use(serve(
-  path.join(__dirname, 'public'),
-));
+
 
 app.use(async (ctx, next) => {
-  //设置全局状态机
+  // 设置全局状态机
   ctx.state.ctx = ctx;
   await next();
 });
@@ -48,13 +46,13 @@ marked.setOptions({
   pedantic: false,
   sanitize: true,
   smartLists: true,
-  smartypants: false
+  smartypants: false,
 });
 
 app.use(async (ctx, next) => {
-  ctx.state.ctx = ctx
-  ctx.state.marked = marked
-  await next()
+  ctx.state.ctx = ctx;
+  ctx.state.marked = marked;
+  await next();
 });
 
 router(app);
